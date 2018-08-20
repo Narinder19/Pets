@@ -17,6 +17,7 @@ package com.example.android.pets;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -114,16 +115,18 @@ public class EditorActivity extends AppCompatActivity {
     }
     private void insertPet(){
         // Create and/or open a database to read from it
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(PetContract.PetEntry.COLUMN_PET_NAME,mNameEditText.getText().toString().trim());
         values.put(PetContract.PetEntry.COLUMN_PET_BREED,mBreedEditText.getText().toString().trim());
         values.put(PetContract.PetEntry.COLUMN_PET_GENDER, String.valueOf(mGender));
         values.put(PetContract.PetEntry.COLUMN_PET_WEIGHT, Integer.parseInt(mWeightEditText.getText().toString()));
-        long newRowId = db.insert(PetContract.PetEntry.TABLE_NAME,null, values);
-
-        Toast.makeText(getApplicationContext(), "New Row Id: " + newRowId,Toast.LENGTH_SHORT).show();
+        Uri newUri = getContentResolver().insert(PetEntry.CONTENT_URI, values);
+        if(newUri == null){
+            Toast.makeText(getApplicationContext(), R.string.editor_insert_pet_failed, Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(getApplicationContext(), R.string.editor_insert_pet_successful, Toast.LENGTH_SHORT).show();
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
