@@ -16,6 +16,7 @@
 package com.example.android.pets;
 
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.android.pets.data.PetContract.PetEntry;
@@ -63,6 +65,19 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         petAdapter = new PetCursorAdapter(this, cursor);
         lvPet.setAdapter(petAdapter);
+
+        lvPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                //Form the content URI that represents the specific pet that was clicked on
+                //by appending the id onto the PetEntry_CONTENT_URI.
+                Uri currentPetUri = ContentUris.withAppendedId(PetEntry.CONTENT_URI, id);
+                //Set the URI on the data field of the intent
+                intent.setData(currentPetUri);
+                startActivity(intent);
+            }
+        });
         getLoaderManager().initLoader(0, null, this);
     }
 
@@ -99,9 +114,14 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
                 // Do nothing for now
+                deleteAllPets();
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteAllPets() {
+        getContentResolver().delete(PetEntry.CONTENT_URI,null, null);
     }
 
     @Override

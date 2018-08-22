@@ -60,8 +60,24 @@
     <string name="gender_female">Female</string>
     <string name="editor_insert_pet_successful">Pet saved.</string>
     <string name="editor_insert_pet_failed">Error with saving pet.</string>
+    <string name="editor_update_pet_successful">Pet updated.</string>
+    <string name="editor_update_pet_failed">No pet updated.</string>
+    <string name="editor_delete_pet_successful">Pet deleted.</string>
+    <string name="editor_delete_pet_failed">No pet deleted.</string>
     <string name="pet_table_content">The pets table contains %d pets.\n\n</string>
 
     <string name="empty_view_title_text">It\'s a bit lonely here...</string>
     <string name="empty_view_subtitle_text">Get started by adding a pet</string>
+
+    <string name="activity_title_edit_pet">Edit Pet</string>
+    <string name="activity_title_add_pet">Add a Pet</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
 </resources>
